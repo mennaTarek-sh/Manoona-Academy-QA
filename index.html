@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manoona Academy - Performance Engineering Hub</title>
+    
+    <link href="https://googleapis.com" rel="stylesheet">
+    <link rel="stylesheet" href="https://cloudflare.com">
+    
+    <style>
+      
+       :root[data-theme="dark"] {
+    --bg-base: #060913;
+    --bg-surface: rgba(15, 22, 42, 0.65);
+    --bg-surface-hover: rgba(22, 32, 62, 0.85);
+    --border-color: rgba(255, 255, 255, 0.06);
+    --border-hover: rgba(0, 242, 254, 0.4);
+    --text-primary: #ffffff;
+    --text-secondary: #94a3b8;
+    --primary-gradient: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+    --accent-glow: rgba(0, 242, 254, 0.15);
+    --code-bg: #02040a;
+}
+
+:root[data-theme="light"] {
+    --bg-base: #f8fafc;
+    --bg-surface: #ffffff;
+    --bg-surface-hover: #f1f5f9;
+    --border-color: rgba(0, 0, 0, 0.08);
+    --border-hover: rgba(79, 172, 254, 0.6);
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --primary-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --accent-glow: rgba(79, 172, 254, 0.1);
+    --code-bg: #e2e8f0;
+}
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+            transition: background-color 0.4s ease, border-color 0.4s ease, transform 0.3s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+    <!-- =========================================================================
+         NAVIGATION HEADER 
+         ========================================================================= -->
+    <style>
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px 6%;
+            background: rgba(var(--bg-base), 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .brand-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .avatar-logo {
+            width: 45px;
+            height: 45px;
+            border-radius: 50px;
+            object-fit: cover;
+              object-position: center 15%;
+            border: 2px solid #00f2fe;
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
+            
+        }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: 900;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            position: relative;
+            padding: 8px 0;
+        }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            color: #00f2fe;
+        }
+
+        .theme-toggle-btn {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .theme-toggle-btn:hover {
+            border-color: #00f2fe;
+            color: #00f2fe;
+        }
+    </style>
+
+        <!-- =========================================================================
+         NAVIGATION HEADER 
+         ========================================================================= -->
+    <header>
+        <div class="brand-wrapper">
+            <img src="logo.jpeg" alt="Menna Tarek Logo" class="avatar-logo">
+            <div class="logo-text">Manoona QA </div>
+        </div>
+        <div class="nav-container">
+            <ul class="nav-menu">
+                <li><a href="#hero-view" class="active">الرئيسية</a></li>
+                <li><a href="#track1">التأسيس</a></li>
+                <li><a href="#track2">أول فحص</a></li>
+                <li><a href="#track3">الارتباط</a></li>
+            </ul>
+            
+            <button class="theme-toggle-btn" id="theme-switcher-node" onclick="toggleThemeEngine()" style="padding: 5px 15px; width: auto; font-weight: bold; font-size: 14px;">
+                تبديل الوضع 🌙/☀️
+            </button>
+        </div>
+    </header>
+
+    <!-- =========================================================================
+         HERO SECTION & CORE LAYOUT STYLES 
+         ========================================================================= -->
+    <style>
+        .hero-viewport {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 10%;
+            margin-top: 80px;
+            position: relative;
+        }
+
+        .hero-glow-badge {
+            background: rgba(0, 242, 254, 0.08);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            padding: 10px 24px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #00f2fe;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        .hero-viewport h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 25px;
+            color: var(--text-primary);
+        }
+
+        .hero-viewport h1 span {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-viewport p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            max-width: 850px;
+            margin-bottom: 45px;
+        }
+
+        .master-cta-trigger {
+            background: var(--primary-gradient);
+            color: #060913;
+            padding: 18px 45px;
+            border-radius: 100px;
+            font-weight: 800;
+            text-decoration: none;
+            font-size: 18px;
+            box-shadow: 0 10px 30px var(--accent-glow);
+        }
+
+        .master-cta-trigger:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 242, 254, 0.4);
+        }
+
+        .hub-main-layout {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 4%;
+        }
+
+        .mega-architecture-row {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 32px;
+            padding: 60px;
+            margin-bottom: 60px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .mega-architecture-row:hover {
+            border-color: var(--border-hover);
+            background: var(--bg-surface-hover);
+            box-shadow: 0 30px 60px rgba(0, 242, 254, 0.08);
+        }
+
+        .row-header-block {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .row-icon-screen {
+            width: 70px;
+            height: 70px;
+            background: rgba(0, 242, 254, 0.1);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: #00f2fe;
+        }
+
+        .row-header-block h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .row-body-text {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+
+        .row-body-text ul {
+            list-style: none;
+            margin: 25px 0;
+        }
+
+        .row-body-text li {
+            position: relative;
+            padding-right: 35px;
+            margin-bottom: 18px;
+        }
+
+        .row-body-text li::before {
+            content: "\f058";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            right: 0;
+            top: 2px;
+            color: #00e676;
+            font-size: 20px;
+        }
+
+        .terminal-code-canvas {
+            background: var(--code-bg);
+            border-radius: 16px;
+            padding: 25px;
+            font-family: 'Courier New', Courier, monospace;
+            direction: ltr;
+            text-align: left;
+            margin: 30px 0;
+            border-left: 5px solid #00f2fe;
+            overflow-x: auto;
+            font-size: 16px;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .action-video-anchor {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: #ff0000;
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 16px;
+            text-decoration: none;
+            font-weight: 700;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.2);
+        }
+
+        .action-video-anchor:hover {
+            background: #cc0000;
+            transform: scale(1.02);
+        }
+
+        .exam-panel-box {
+            margin-top: 40px;
+            background: rgba(0, 242, 254, 0.03);
+            border: 1px dashed var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+        }
+
+        .question-bar {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .reveal-solution-trigger {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            color: #00f2fe;
+            padding: 8px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            margin-top: 15px;
+        }
+
+        .reveal-solution-trigger:hover {
+            background: #00f2fe;
+            color: #060913;
+        }
+
+        .hidden-solution-drawer {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 230, 118, 0.08);
+            border-right: 4px solid #00e676;
+            border-radius: 8px;
+            color: var(--text-primary);
+        }
+    </style>
+
+    <section class="hero-viewport" id="hero-view">
+        <div class="hero-glow-badge">💎 الموسوعة الهندسية الأقوى لاختبارات الأداء</div>
+        <h1>احترف الـ Performance Testing<span> خطوة بخطوة</span></h1>
+        <p>موسوعة تطبيقية شاملة مُصممة لتبسيط البنية البرمجية العميقة للأنظمة، تمكينك من مهارات كسر وحماية السيرفرات، أكاديمية منونة.. دليلك الفني العالي لإتقان فحص الأنظمة العميقة، وربط الأداء ـ CI/CD بذكاء واحترافية.ـ .</p>
+        <a href="#track1" class="master-cta-trigger">ابدأ تصفح الموسوعة الكبرى <i class="fa-solid fa-arrow-left"></i></a>
+    </section>
+
+    <div class="hub-main-layout">
+        <!-- =========================================================================
+             TRACK 1: INTRODUCTION & FUNDAMENTALS 
+             ========================================================================= -->
+        <section class="mega-architecture-row" id="track1">
+            <div class="row-header-block">
+                <div class="row-icon-screen"><i class="fa-solid fa-vault"></i></div>
+                <h2>1. مقدمة وتأسيس علم اختبارات الأداء (Performance Testing)</h2>
+            </div>
+            <div class="row-body-text">
+                <p>اختبار الأداء ليس مجرد تشغيل أداة، بل هو خط الدفاع الأول لمنع كوارث وانهيارات الأنظمة يوم الإطلاق الرسمي ومحاكاة سلوك النظام تحت الضغوط المتنوعة.</p>
+                <ul>
+                    <li><strong>الركائز الثلاث الأساسية (The 3 Pillars):</strong> قياس وتحليل <strong>السرعة (Speed)</strong>، وقدرة النظام على <strong>التوسع الهيكلي (Scalability)</strong>، ومدى <strong>الاستقرار والثبات (Stability)</strong>.</li>
+                    <li><strong>تفكيك أنواع اختبارات الأداء الأربعة:</strong>
+                        <br>• <strong>Load Testing:</strong> فحص ومراقبة النظام تحت ظروف وسعة المستخدمين الطبيعية والمتوقعة.
+                        <br>• <strong>Stress Testing:</strong> رفع الأحمال لمستويات قصوى لتحديد نقطة انهيار السيرفر بدقة (Break Point).
+                        <br>• <strong>Endurance Testing:</strong> قياس الثبات عبر ضغط مستمر لفترات طويلة لكشف تسريبات الذاكرة (Memory Leaks).
+                        <br>• <strong>Spike Testing:</strong> فحص قدرة التعافي عبر إدخال دفعات مستخدمين ضخمة بشكل مفاجئ وخروجهم السريع.
+                    </li>
+                </ul>
+
+                <div class="exam-panel-box">
+                    <div class="question-bar"><i class="fa-solid fa-circle-question" style="color:#00f2fe;"></i> سؤال مهندسي الأداء: ما هو الفحص الأنسب لمعرفة إذا كان النظام يعاني من Memory Leak بعد العمل لـ 48 ساعة متواصلة؟</div>
+                    <button class="reveal-solution-trigger" onclick="toggleSolutionDisplay('sol1')">إظهار الحل النموذجي</button>
+                    <div class="hidden-solution-drawer" id="sol1">
+                        <strong>الإجابة الصحيحة:</strong> هو فحص التحمل <strong>Endurance Testing</strong>، لأنه مصمم خصيصاً لمراقبة استهلاك موارد الجهاز والذاكرة على المدى الطويل كشفاً لأي تهنيج أو تسريب غير طبيعي للبيانات.
+                    </div>
+                </div>
+
+                
+            </div>
+        </section>
+        <!-- =========================================================================
+             TRACK 2: FIRST REAL PERFORMANCE TEST 
+             ========================================================================= -->
+        <section class="mega-architecture-row" id="track2">
+            <div class="row-header-block">
+                <div class="row-icon-screen"><i class="fa-solid fa-play"></i></div>
+                <h2>2. بناء أول فحص حقيقي واستخدام Apache JMeter</h2>
+            </div>
+            <div class="row-body-text">
+                <p>الانتقال الفعلي للجانب التطبيقي من خلال محاكاة ريكويستس حقيقية واختبار استجابة السيرفرات وفك العقد البرمجية يدوياً وآلياً.</p>
+                <ul>
+                    <li><strong>تكوين الـ Thread Group:</strong> يمثل نقطة انطلاق المحاكاة لتحديد عدد المستخدمين الوهميين (Virtual Users) وزمن صعودهم وهبوطهم على النظام.</li>
+                    <li><strong>عناصر الفحص الأساسية:</strong> ربط طلبات الـ HTTP Requests بالموقع أو السيرفر المراد فحصه، وضبط الإعدادات لتتوافق مع بروتوكولات الشبكة.</li>
+                    <li><strong>شاشات المراقبة اللحظية (Listeners):</strong> استخدام عناصر مثل <code>View Results Tree</code> للتحقق من الأكواد المرتجعة وصحة الاستجابة [0.1.3، 0.1.10].</li>
+                </ul>
+
+                <div class="exam-panel-box">
+                    <div class="question-bar"><i class="fa-solid fa-circle-question" style="color:#00f2fe;"></i> سؤال مهندسي الأداء: لماذا لا يفضل الاعتماد على واجهة جيميتر الرسومية (GUI) عند تشغيل أحمال ضخمة؟</div>
+                    <button class="reveal-solution-trigger" onclick="toggleSolutionDisplay('sol2')">إظهار الحل النموذجي</button>
+                    <div class="hidden-solution-drawer" id="sol2">
+                        <strong>الإجابة الصحيحة:</strong> لأن واجهة الـ GUI تستهلك قدراً ضخماً من موارد الجهاز والـ RAM كبصريات، مما يؤدي إلى خروج نتائج أداء غير دقيقة أو تجميد أداة جيميتر نفسها. الحل الاحترافي هو التشغيل عبر الـ Non-GUI Mode.
+                    </div>
+                </div>
+
+                
+            </div>
+        </section>
+        <!-- =========================================================================
+             TRACK 3: DYNAMIC DATA & CORRELATION
+             ========================================================================= -->
+        <section class="mega-architecture-row" id="track3">
+            <div class="row-header-block">
+                <div class="row-icon-screen"><i class="fa-solid fa-link"></i></div>
+                <h2>3. البيانات الديناميكية والارتباط المتقدم (Advanced Correlation)</h2>
+            </div>
+            <div class="row-body-text">
+                <p>هنا تكمن أسرار الحماية والأتمتة الحقيقية؛ فبدون ربط البيانات الديناميكية مثل Tokens أو Session IDs، ستفشل جميع سيناريوهات الفحص وتتحول إلى ريكويستس ميتة [0.1.3، 0.1.7].</p>
+                <ul>
+                    <li><strong>مفهوم الـ Correlation الديناميكي:</strong> قنص المتغيرات والرموز الأمنية التي يولدها السيرفر لحظياً وتمريرها ديناميكياً للريكويستس التالية [0.1.3، 0.1.10، 0.1.22].</li>
+                    <li><strong>الـ Regular Expression Extractor:</strong> أداة برمجية ذكية (Post-Processor) لقراءة الـ Headers والـ Body وتفكيك النصوص عبر الـ RegEx [0.1.3، 0.1.17].</li>
+                    <li><strong>الـ Debug Sampler:</strong> أداة المراقبة والتحقق من قيم المتغيرات وصحة قراءتها خلف الكواليس لتجنب أخطاء الفحص [0.1.3، 0.1.25].</li>
+                </ul>
+
+                <div class="terminal-code-canvas">
+                    <span style="color: #ff79c6;">// RegEx Pattern to Capture Dynamic Authorization Token</span><br>
+                    <span style="color: #8be9fd;">Reference Name:</span> my_session_token<br>
+                    <span style="color: #8be9fd;">Regular Expression:</span> "session_id":"([^"]+)"<br>
+                    <span style="color: #8be9fd;">Template:</span> $1$<br>
+                    <span style="color: #8be9fd;">Match No.:</span> 1
+                </div>
+
+                <div class="exam-panel-box">
+                    <div class="question-bar"><i class="fa-solid fa-circle-question" style="color:#00f2fe;"></i> سؤال مهندسي الأداء: ما هو كود الـ Status Code الذي يظهر غالباً كدليل على فشل عمل الـ Correlation؟</div>
+                    <button class="reveal-solution-trigger" onclick="toggleSolutionDisplay('sol3')">إظهار الحل النموذجي</button>
+                    <div class="hidden-solution-drawer" id="sol3">
+                        <strong>الإجابة الصحيحة:</strong> تظهر غالباً أخطاء مثل <strong>401 Unauthorized</strong> أو <strong>403 Forbidden</strong>، لأن السيرفر يعتبر ريكويست المستخدم منتهي الصلاحية بسبب إرسال Token قديم أو ثابت (Hardcoded) [0.1.3، 0.1.7].
+                    </div>
+                </div>
+
+                
+            </div>
+        </section>
+        <!-- =========================================================================
+             TRACK 4: TIMERS & ASSERTIONS 
+             ========================================================================= -->
+        <section class="mega-architecture-row" id="track4">
+            <div class="row-header-block">
+                <div class="row-icon-screen"><i class="fa-solid fa-clock"></i></div>
+                <h2>4. المؤقِّتات، التأكيدات، والتحكم في شكل الضغط (Timers & Assertions)</h2>
+            </div>
+            <div class="row-body-text">
+                <p>ضبط الفحص ليحاكي السلوك البشري الطبيعي؛ منعاً لضرب السيرفرات بهجمات عمياء تدمر دقة النتائج، مع تفعيل آليات جزم فنية متطورة.</p>
+                <ul>
+                    <li><strong>الـ Think Time البشري:</strong> إضافة فترات انتظار متباينة ومنطقية بين العمليات لمحاكاة تصفح وقراءة العميل للموقع قبل اتخاذ خطوته التالية [0.1.3، 0.1.4، 0.1.6].</li>
+                    <li><strong>الـ Uniform Random Timer:</strong> دمج وقت تأخير ثابت مع نطاق عشوائي متغير لخلق تفاوت واقعي بين سرعات المستخدمين [0.1.3، 0.1.17، 0.1.21].</li>
+                    <li><strong>خدعة كود الـ 200 OK:</strong> حماية سكريبت الفحص من الصفحات البيضاء الفارغة التي ترجع بكود نجاح مخادع من خلال إضافة <code>Response Assertion</code> للتحقق من المحتوى الفعلي داخل الصفحة [0.1.3، 0.1.11، 0.1.12].</li>
+                </ul>
+
+                <div class="exam-panel-box">
+                    <div class="question-bar"><i class="fa-solid fa-circle-question" style="color:#00f2fe;"></i> سؤال مهندسي الأداء: إذا تم وضع الـ Timer مباشرة تحت الـ Thread Group كعنصر رئيسي، ما هو تأثيره؟</div>
+                    <button class="reveal-solution-trigger" onclick="toggleSolutionDisplay('sol4')">إظهار الحل النموذجي</button>
+                    <div class="hidden-solution-drawer" id="sol4">
+                        <strong>الإجابة الصحيحة:</strong> سيؤثر على **كل** الـ Requests الموجودة داخل الـ Thread Group بدون استثناء، وسيقوم جيميتر بتنفيذ وقت الانتظار قبل كل ريكويست منها. لتطبيقه على ريكويست واحد فقط، يجب وضعه كعنصر ابن تحت هذا الريكويست مباشرة.
+                    </div>
+                </div>
+
+               
+            </div>
+        </section>
+        <!-- =========================================================================
+             TRACK 5: CLI MODE & HTML DASHBOARDS 
+             ========================================================================= -->
+        <section class="mega-architecture-row" id="track5">
+            <div class="row-header-block">
+                <div class="row-icon-screen"><i class="fa-solid fa-terminal"></i></div>
+                <h2>5. الاحتراف عبر السطر البرمجي وتقارير الـ HTML التفاعلية</h2>
+            </div>
+            <div class="row-body-text">
+                <p>تشغيل الاختبارات كالمحترفين؛ حيث نتخلى تماماً عن الواجهة الرسومية لتوفير موارد الماكينة وضمان دقة الحسابات، مع استخراج لوحات تحكم بصرية تذهل الإدارة والعملاء [0.1.4، 0.1.5].</p>
+                <ul>
+                    <li><strong>أمر التشغيل الصامت (CLI Mode):</strong> كتابة وتنفيذ أوامر الـ Terminal لتشغيل الفحص بأقل استهلاك ممكن للـ CPU والذاكرة.</li>
+                    <li><strong>توليد لوحة تحكم تفاعلية (HTML Dashboard):</strong> استخراج ملفات بصرية ذكية تحتوي على رسومات وجداول إحصائية متكاملة بضغطة زر [0.1.3، 0.1.15].</li>
+                    <li><strong>مؤشرات الأداء الاحترافية (KPIs):</strong> تحليل وفهم مؤشر رضا العميل <strong>APDEX</strong> ومعدل تدفق البيانات <strong>Throughput</strong> الفعلي [0.1.3، 0.1.22، 0.1.23].</li>
+                </ul>
+
+                <div class="terminal-code-canvas">
+                    <span style="color: #ff79c6;"># Execute test plan without GUI and generate complete interactive HTML report</span><br>
+                    <span style="color: #50fa7b;">jmeter</span> -n -t <span style="color: #f1fa8c;">production_load_test.jmx</span> -l <span style="color: #f1fa8c;">log_results.jtl</span> -e -o <span style="color: #f1fa8c;">/var/www/perf-dashboard</span>
+                </div>
+
+                <div class="exam-panel-box">
+                    <div class="question-bar"><i class="fa-solid fa-circle-question" style="color:#00f2fe;"></i> سؤال مهندسي الأداء: ماذا يعني اختصار APDEX في تقرير jmeter، وماذا تشير النتيجة إذا كانت 0.95؟</div>
+                    <button class="reveal-solution-trigger" onclick="toggleSolutionDisplay('sol5')">إظهار الحل النموذجي</button>
+                    <div class="hidden-solution-drawer" id="sol5">
+                        <strong>الإجابة الصحيحة:</strong> هو اختصار لـ <strong>Application Performance Index</strong> وهو معيار عالمي لقياس مدى رضا المستخدم عن سرعة استجابة التطبيق [0.1.3، 0.1.22]. النتيجة 0.95 تعني أداءً ممتازاً جداً (Excellent) وقريباً من المثالية، حيث أن القيمة العظمى له هي 1.0.
+                    </div>
+                </div>
+
+                
+            </div>
+        </section>
+        <!-- =========================================================================
+             TRACK 6: CI/CD PIPELINES & AI INTEGRATION 
+             ========================================================================= -->
+        <section class="mega-architecture-row" id="track6">
+            <div class="row-header-block">
+                <div class="row-icon-screen"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                <h2>6. هندسة الأتمتة الكاملة (CI/CD) والدمج مع الذكاء الاصطناعي</h2>
+            </div>
+            <div class="row-body-text">
+                <p>بلوغ أعلى درجات الاحتراف الهندسي؛ من خلال جعل فحص الأداء عملية تلقائية بالكامل تعمل خلف الكواليس، وتطويع الـ AI ليكون مستشارك التقني في فك الأكواد المعقدة وقراءة جداول المشاكل [0.1.3، 0.1.15].</p>
+                <ul>
+                    <li><strong>خطوط الإنتاج المؤتمتة (Continuous Integration):</strong> دمج سكريبتات JMeter داخل Jenkins أو GitHub Actions لتعمل الاختبارات تلقائياً مع كل عملية رفع كود جديدة.</li>
+                    <li><strong>الذكاء الاصطناعي كـ Script Writer:</strong> استخدام نماذج الـ AI الذكية لكتابة وتدقيق معادلات الـ RegEx الـ غلسة والمعقدة لتسريع وقت التطوير [0.1.3، 0.1.13].</li>
+                    <li><strong>الـ AI كـ Consultant ومحلل تقني:</strong> تغذية الـ AI بجداول تقارير الـ HTML لرصد مكان الاختناق (Bottleneck) بدقة والحصول على توصيات فورية للمطورين [0.1.3، 0.1.15].</li>
+                </ul>
+
+                <div class="exam-panel-box">
+                    <div class="question-bar"><i class="fa-solid fa-circle-question" style="color:#00f2fe;"></i> سؤال مهندسي الأداء: كيف تخدم عقلية مهندس الأداء جودة التطبيق عند ربط الاختبارات بالـ CI/CD Pipeline?</div>
+                    <button class="reveal-solution-trigger" onclick="toggleSolutionDisplay('sol6')">إظهار الحل النموذجي</button>
+                    <div class="hidden-solution-drawer" id="sol6">
+                        <strong>الإجابة الصحيحة:</strong> تضمن منع دخول أي كود جديد يسبب بطء للنظام (Performance Regression) إلى بيئة الإنتاج الفعلي، حيث يقوم الـ Pipeline بإيقاف ورفض الـ Build تلقائياً في حال تخطي معدل الأخطاء أو زمن الاستجابة للحدود المسموحة.
+                    </div>
+                </div>
+
+              
+            </div>
+        </section>
+
+    </div> 
+    <!-- =========================================================================
+         CREATIVE FOOTER WITH INTEGRATED PORTFOLIO & SOCIAL LINK ENGINE
+         ========================================================================= -->
+         <!-- =========================================================================
+         CREATIVE FOOTER WITH INTEGRATED PORTFOLIO & SOCIAL LINK ENGINE
+         ========================================================================= -->
+    <footer style="background: var(--bg-surface); border-top: 1px solid var(--border-color); padding: 60px 4% 30px 4%; margin-top: 100px;">
+        <div style="max-width: 1400px; margin: 0 auto; text-align: center; margin-bottom: 50px;">
+            <a href="https://youtube.com/playlist?list=PLrp6Vffgy7Xf5QIYHRY835QHLlG3AVRFn&si=aX4-cGCoWdzBq3Tj" target="_blank" style="display: inline-flex; align-items: center; gap: 12px; background: #ff0000; color: #fff; padding: 16px 38px; border-radius: 100px; text-decoration: none; font-weight: 800; font-size: 18px; box-shadow: 0 8px 25px rgba(255, 0, 0, 0.3); transition: 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                📺 شاهد كورس هندسة الأداء الكامل (Playlist)
+            </a>
+        </div>
+
+        <div style="max-width: 1400px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 30px;">
+            <div>
+                <h3 style="font-size: 1.6rem; font-weight: 900; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px;">Manoona QA Academy</h3>
+                <p style="color: var(--text-secondary); max-width: 450px; font-size: 15px;">الموقع التعليمي والتطبيقي الأقوى بالشرق الأوسط لتبسيط وهندسة اختبارات جودة البرمجيات وبناء العقلية التحليلية الاحترافية للـ QA.</p>
+            </div>
+            
+            <div style="display: flex; gap: 20px;">
+                <a href="https://youtube.com/@manoonaqa?si=2IhmwAE-5kD_iIhW" target="_blank" aria-label="YouTube Channel" style="width: 120px; height: 50px; background: #ff0000; color: #fff; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: bold; text-decoration: none; box-shadow: 0 4px 15px rgba(255,0,0,0.3); transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                    YouTube 🔴
+                </a>
+                <a href="https://www.linkedin.com/in/menna-elshahid" target="_blank" aria-label="LinkedIn Profile" style="width: 120px; height: 50px; background: #0077b5; color: #fff; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: bold; text-decoration: none; box-shadow: 0 4px 15px rgba(0,119,181,0.3); transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                    LinkedIn 🔵
+                </a>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 50px; padding-top: 25px; border-top: 1px solid var(--border-color); color: var(--text-secondary); font-size: 14px;">
+            جميع الحقوق محفوظة لصالح منصة وموسوعة <span style="color: #00f2fe; font-weight: 700;">Manoona QA Hub</span> © 2026
+        </div>
+    </footer>
+
+    <a href="#hero-view" aria-label="Back to top" style="position: fixed; bottom: 30px; left: 30px; width: 50px; height: 50px; background: var(--primary-gradient); color: #060913; border-radius: 50px; display: flex; align-items: center; justify-content: center; font-size: 20px; text-decoration: none; box-shadow: 0 10px 20px rgba(0,0,0,0.3); z-index: 999;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+        ⬆️
+    </a>
+
+    <!-- =========================================================================
+         JAVASCRIPT LOGIC CONTROLLER ENGINE 
+         ========================================================================= -->
+    <script>
+        function toggleThemeEngine() {
+            const rootNode = document.documentElement;
+            const currentTheme = rootNode.getAttribute('data-theme');
+            
+            if (currentTheme === 'dark') {
+                rootNode.setAttribute('data-theme', 'light');
+            } else {
+                rootNode.setAttribute('data-theme', 'dark');
+            }
+        }
+
+        function toggleSolutionDisplay(solutionId) {
+            const drawer = document.getElementById(solutionId);
+            if (drawer.style.display === 'block') {
+                drawer.style.display = 'none';
+            } else {
+                drawer.style.display = 'block';
+            }
+        }
+
+        window.addEventListener('scroll', () => {
+            let sections = document.querySelectorAll('section, div.hub-main-layout > section');
+            let navLinks = document.querySelectorAll('.nav-menu a');
+            
+            sections.forEach(sec => {
+                let top = window.scrollY;
+                let offset = sec.offsetTop - 160;
+                let height = sec.offsetHeight;
+                let id = sec.getAttribute('id');
+                
+                if(top >= offset && top < offset + height) {
+                    navLinks.forEach(links => {
+                        links.classList.remove('active');
+                        const matchedLink = document.querySelector('.nav-menu a[href*=' + id + ']');
+                        if(matchedLink) matchedLink.classList.add('active');
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
